@@ -15,7 +15,7 @@ async def search_articles(query, num_articles, min_year, max_year, min_score, ma
         "min_year": min_year,
         "max_year": max_year,
         "min_score": min_score,
-        "match_type": match_type  # Добавляем тип поиска
+        "match_type": match_type
     }
     
     async with aiohttp.ClientSession() as session:
@@ -41,7 +41,6 @@ async def main():
         max_year = st.number_input("Максимальный год", min_value=1900, max_value=2025, value=2025, step=1)
         min_score = st.slider("Минимальный рейтинг", min_value=1.00, max_value=50.0, value=1.00, step=0.1)
         
-        # Выбор типа поиска: Умный поиск или Дословное совпадение
         search_type = st.radio(
             "Тип поиска", 
             options=["Умный поиск", "Дословный поиск"], 
@@ -80,8 +79,6 @@ async def main():
                     st.session_state.total_articles = results.get("total", 0)
                 st.rerun()
                     
-        
-    # Примеры запросов
     col1, col2, col3, col4 = st.columns([2, 3, 3, 3])
     with col1:
         st.write(f"#### Примеры запросов:")
@@ -123,7 +120,6 @@ async def main():
                 st.rerun()
 
     if st.session_state.articles:
-    # Если найдено хотя бы одно совпадение
         articles_list = [
         {
             "title": item['_source'].get('title', '') or item.get('title', ''),
@@ -146,4 +142,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())  # Запуск асинхронной main()
+    asyncio.run(main())
